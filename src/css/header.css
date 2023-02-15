@@ -1,0 +1,164 @@
+/* HEADER */
+.page-header {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
+  /* height: 113px; */
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  color: var(--primary-text-color);
+
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 1.37;
+  /* letter-spacing: 0.03em; */
+  text-decoration: none;
+}
+
+/* site-nav */
+.site-nav .link.current {
+  position: relative;
+  /* color: var(--accent-text-color); */
+}
+
+.site-nav .link.current::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  bottom: 33px;
+  width: 100%;
+  height: 1px;
+  border-radius: 2px;
+  background-color: var(--accent-text-color);
+}
+
+.site-nav {
+  display: flex;
+  /* outline: 1px solid teal; */
+}
+
+.site-nav .item:not(:last-child) {
+  margin-right: 69px;
+}
+
+.site-nav .link {
+  display: flex;
+  padding-top: 55px;
+  padding-bottom: 33px;
+
+  color: var(--primary-text-color);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.37;
+  /* letter-spacing: 0.02em; */
+
+  transition: color var(--duration) var(--timing-function);
+}
+
+.site-nav .link:hover,
+.site-nav .link:focus {
+  color: var(--accent-text-color);
+}
+
+.nav-section {
+  /* outline: 1px solid tomato; */
+  margin-left: 102px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.search-form-wrapper {
+  /* outline: 1px solid tomato; */
+  margin-left: 147px;
+
+  padding-top: 51px;
+  padding-bottom: 31px;
+}
+
+
+.search-form {
+  display: flex;
+
+  width: 288px;
+  border-radius: 20px;
+
+  align-items: center;
+
+  border: 1px solid var(--primary-text-color);
+
+}
+
+.search-form input {
+  margin-left: 16px;
+  width: 225px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  line-height: 1.71;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.search-button {
+  display: flex;
+  margin-left: 12px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0px;
+  padding: 0;
+
+  /* outline: 1px solid tomato; */
+}
+
+.search-lens-icon {
+  fill: var(--primary-text-color);
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-form-wrapper {
+  /* outline: 1px solid tomato; */
+  margin-left: auto;
+  padding-top: 51px;
+  padding-bottom: 40px;
+
+}
+
+.theme-form {
+  /* outline: 1px solid yellowgreen; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-form label {
+  margin: 0;
+  /* outline: 1px solid teal; */
+  display: flex;
+  align-items: center;
+
+}
+
+.theme-form label input {
+  margin: 0;
+  width: 20px;
+}

@@ -5,11 +5,145 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 // import picsTpl from './templates/pics-list.hbs';
 
 import NewsApiService from "./news-api.js";
-
+import { save, load } from "./storage.js";
 
 const formRef = document.querySelector(".search-form");
-const articlesWrapperRef = document.querySelector('#articlesWrapper');
+const articlesWrapperRef = document.querySelector('.articlesWrapper');
+
+
 // const sentinelRef = document.querySelector('#sentinel');
+
+//* theme-switch -----------------------------
+const themeSwitchFormRef = document.querySelector('.theme-form');
+const themeSwitchInputDarkRef = document.querySelector('#dark');
+const themeSwitchInputLightRef = document.querySelector('#light');
+
+const bodyRef = document.querySelector('body');
+// const lightTheme = {
+//   bkgColor: dark,
+// };
+const STORAGE_KEY = "theme-state-key";
+
+const storedTheme = load(STORAGE_KEY);
+if (storedTheme !== undefined) { setTheme(storedTheme) } else setTheme('Light');
+
+function setTheme(theme) {
+  if (theme === 'Light') {
+    bodyRef.classList.remove('theme-dark');
+    themeSwitchInputLightRef.checked = true;
+    themeSwitchInputDarkRef.checked = false;
+  };
+  if (theme === 'Dark') {
+
+    bodyRef.classList.add('theme-dark');
+    themeSwitchInputLightRef.checked = false;
+    themeSwitchInputDarkRef.checked = true;
+  }
+}
+
+themeSwitchFormRef.addEventListener('input', onThemeSwitchFormInput);
+
+function onThemeSwitchFormInput(e) {
+  const currentTheme = e.currentTarget.color.value;
+  console.log('currentTheme :>> ', currentTheme);
+  save(STORAGE_KEY, currentTheme);
+  setTheme(currentTheme);
+}
+//*-------------------------------
+ 
+//* paginator example-----------------------------
+// let currentValue = 1;
+// const pageLinksArrayRef = document.getElementsByClassName('page__link');
+// const paginatorRef = document.querySelector('.paginator');
+// const prevBtnRef = document.querySelector('.prev__btn');
+// const nextBtnRef = document.querySelector('.next__btn');
+
+// paginatorRef.addEventListener('click', onPaginatorClick);
+// function onPaginatorClick(e) {
+//   for (const p of pageLinksArrayRef) {
+//     p.classList.remove('active');
+//   }
+//     e.target.classList.add("active");
+//   currentValue = e.target.value;
+//   if (currentValue === 1) {
+//     prevBtnRef.disabled = true;
+//     nextBtnRef.disabled = false;
+//   }
+//   if (currentValue === 5) {
+//     nextBtnRef.disabled = true;
+//     prevBtnRef.disabled = false;
+//   }
+//   if (currentValue > 1 && currentValue < 5) {
+//     prevBtnRef.disabled = false;
+//     nextBtnRef.disabled = false;
+//   };
+//   console.log('currentValue :>> ', currentValue);
+// }
+// prevBtnRef.addEventListener('click', onPrevRtnClick);
+// function onPrevRtnClick() {
+//   if (currentValue > 1) {
+//     for (const p of pageLinksArrayRef) p.classList.remove('active');
+//   };
+//   currentValue -= 1;
+//   pageLinksArrayRef[currentValue - 1].classList.add('active');
+//   console.log('currentValue :>> ', currentValue);
+//   if (currentValue === 1) {
+//     prevBtnRef.disabled = true;
+//     nextBtnRef.disabled = false;
+//   }
+
+// }
+// nextBtnRef.addEventListener('click', onNextBtnClick);
+// function onNextBtnClick() {
+//   if (currentValue < 5) {
+//     for (const p of pageLinksArrayRef) p.classList.remove('active');
+//   };
+//   currentValue += 1;
+//   pageLinksArrayRef[currentValue-1].classList.add('active');
+//   console.log('currentValue :>> ', currentValue);
+  
+//     if (currentValue === 5) {
+//     nextBtnRef.disabled = true;
+//     prevBtnRef.disabled = false;
+//     }
+// }
+//*------------------
+// *PAGINATOR ACTIVE
+// const pageLinksArrayRef = document.getElementsByClassName('page__link');
+// const paginatorWrapperRef = document.querySelector('.paginator__wrapper');
+const paginatorRef = document.querySelector('.paginator');
+const prevBtnRef = document.querySelector('.prev__btn');
+const nextBtnRef = document.querySelector('.next__btn');
+
+
+const per_page = 10;
+const totalNewsQuantity = 150;
+
+const totalPages = Math.ceil(totalNewsQuantity / per_page);
+console.log('totalPages :>> ', totalPages);
+
+const ulRef = document.createElement('ul');
+ulRef.classList.add('paginator');
+ulRef.classList.add('list');
+
+for (let i = 0; i < totalPages; i += 1) {
+  const liRef = renderPaginationBtns(i+1);
+  ulRef.appendChild(liRef);
+}
+console.log('ulRef :>> ', ulRef);
+prevBtnRef.after(ulRef);
+
+function renderPaginationBtns(pageNumber) {
+  const liEl = document.createElement('li');
+  liEl.classList.add('page__link');
+  liEl.textContent = pageNumber;
+  return liEl;
+
+}
+
+
+
+// *------------------
 
 const newsApiService = new NewsApiService();
 
@@ -87,12 +221,12 @@ function renderNewsMarkup(docs) {
       return `
     <div class="article-card">
          <img src="https://www.nytimes.com/${multimedia[1].url}" class="article-img">
-        <h2 class="article-title">${headline.main}</h2>
-        <p class="article-description">${abstract}</p>
-        <div class="article-footer">
-        <p class="article-date">${pub_date.slice(0, 10)}</p>
-        <a href="${web_url}" class="article-link" target="_blank">Read more</a>
-        </div>
+          <h2 class="article-title">${headline.main}</h2>
+          <p class="article-description">${abstract} ...</p>
+          <div class="article-footer">
+            <p class="article-date">${pub_date.slice(0, 10)}</p>
+            <a href="${web_url}" class="article-link" target="_blank">Read more</a>
+          </div>
     </div>`
     })
     .join('');

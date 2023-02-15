@@ -1,0 +1,26 @@
+.paginator__wrapper {
+  display: flex;
+  justify-content: center;
+}
+.paginator{
+  display: flex;
+  justify-content: center;
+}
+.page__link, .prev__btn, .next__btn{
+  padding:4px 12px;
+  border: 1px solid var(--accent-text-color);
+  border-radius: 2px;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.38;
+
+  cursor: pointer;
+}
+.page__link, .prev__btn, .next__btn:not(:last-child) {
+  margin-right: 8px;
+}
+.page__link.active{
+  background-color: var(--accent-text-color);
+  color: var(--hover-text-color);
+}

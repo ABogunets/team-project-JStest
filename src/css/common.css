@@ -1,0 +1,111 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-text-color: #111321;
+  --accent-text-color: #4440F6;
+  --primary-bkgd-color: #F4F4F4;
+  --secondary-text-color: #A8A8A8;
+  --button-text-color: #4440F7;
+  --hover-text-color: #FFFFFF;
+
+  --dark-background-color: #2E2E2E;
+
+
+
+
+
+
+  --secondary-bkgd-color: #2F303A;
+  --team-bkgd-color: #F5F4FA;
+
+
+  --herobutton-accent-color: #188CE8;
+  --logo-text-color: #000000;
+
+  --contacts-footer-color: rgba(255, 255, 255, 0.6);
+  --portfolio-bkgd-color: #EEEEEE;
+  --header-line-color: #ECECEC;
+  --icon-color: #AFB1B8;
+
+  --duration: 250ms;
+  --modal-duration: 500ms;
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global */
+body {
+
+    background-color: var(--primary-bkgd-color);
+
+
+      color: var(--primary-text-color);
+
+      font-family: 'Manrope', sans-serif;
+
+      font-size: 12px;
+      line-height: 1.7;
+      letter-spacing: 0.03em;
+}
+body.theme-dark {
+background-color: var(--dark-background-color);
+}
+
+.link,
+.card {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+}
+/* Utilites */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+
+
+
+
+
+
+
+
+/* .load-more {
+  display: block;
+  height: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+}
+
+button:disabled {
+  background-color: #c1c1c1;
+  cursor: not-allowed;
+}
+
+button.is-hidden {
+  display: none;
+} */
+
+
+/* #sentinel {
+  width: 150px;
+  height: 150px;
+  border: 2px solid tomato;
+} */
+
