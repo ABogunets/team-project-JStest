@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Poppins&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
@@ -17,119 +17,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css"
     />
 
-    <link rel="stylesheet" href="./css/common.css" />
-    <link rel="stylesheet" href="./css/header.css" />
-    <link rel="stylesheet" href="./css/articles.css" />
-    <link rel="stylesheet" href="./css/categories.css" />
-    <link rel="stylesheet" href="./css/paginator.css" />
-
-    <title>Team project</title>
+    <link rel="stylesheet" href="./css/calendar.css" />
+    <title>Calendar-test</title>
   </head>
   <body>
-    <header class="page-header">
-      <div class="container main-nav">
-        <!-- Logo and Nav -->
-        <a href="./index.html" class="logo">NEWS</a>
-        <nav class="nav-section">
-          <ul class="site-nav list">
-            <li class="item">
-              <a href="./index.html" class="link current">Home</a>
-            </li>
-            <li class="item">
-              <a href="" class="link">Favorite</a>
-            </li>
-            <li class="item">
-              <a href="" class="link">Read</a>
-            </li>
-          </ul>
-        </nav>
-        <div class="search-form-wrapper">
-          <form class="search-form" id="search-form">
-            <button class="search-button" type="submit">
-              <svg class="search-lens-icon" width="20" height="19">
-                <use href="./images/icons.svg#search-lens"></use>
-              </svg>
-            </button>
-            <input
-              type="text"
-              name="searchQuery"
-              autocomplete="off"
-              placeholder="Search..."
-            />
-          </form>
-        </div>
-        <div class="theme-form-wrapper">
-          <form class="theme-form">
-            <label>
-              <input
-                id="light"
-                type="radio"
-                name="color"
-                value="Light"
-                checked
-              />
-              Light
-            </label>
-            <label>
-              <input id="dark" type="radio" name="color" value="Dark" />
-              Dark
-            </label>
-          </form>
-        </div>
-      </div>
-    </header>
-    <main>
-      <section class="categories">
-        <div class="container">
-          <!-- buttons -->
-          <ul class="button-list list">
-            <li class="item">
-              <button type="button" class="button">Усі</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Веб-сайти</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Додатки</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Дизайн</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Маркетинг</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Дизайн</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Маркетинг</button>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <div class="articlesWrapper container"></div>
-      <!-- paginator example -->
-      <!-- <div class="paginator__wrapper">
-        <button class="prev__btn" disabled>Prev</button>
-        <ul class="paginator list">
-          <li class="page__link active" value="1">1</li>
-          <li class="page__link" value="2">2</li>
-          <li class="page__link" value="3">3</li>
-          <li class="page__link" value="4">4</li>
-          <li class="page__link" value="5">5</li>
-        </ul>
-        <button class="next__btn">Next</button>
-      </div> -->
-      <!-- paginator active -->
-      <div class="paginator__wrapper">
-        <button class="prev__btn" disabled>Prev</button>
-
-        <button class="next__btn" disabled>Next</button>
-      </div>
-
-      <!-- <div id="sentinel"></div> -->
-    </main>
-
     <script src="/index.js" type="module"></script>
   </body>
 </html>

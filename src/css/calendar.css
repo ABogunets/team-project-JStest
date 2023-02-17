@@ -1,0 +1,36 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-bkgd-color: #F8F8F8;
+  --primary-text-color: ##000000;
+  --secondary-text-color: ##5F6775;
+
+  --accent-text-color: #4440F6;
+  --hover-text-color: #FFFFFF;
+}
+
+/* Global */
+body {
+
+    background-color: var(--primary-bkgd-color);
+
+
+      color: var(--primary-text-color);
+
+      font-family: 'Manrope', sans-serif;
+
+      font-size: 14px;
+      line-height: 1.79;
+      letter-spacing: 0.38px;
+
+}
+
+
+
+
+
+
