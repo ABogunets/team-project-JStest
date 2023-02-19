@@ -2,12 +2,14 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
   --primary-bkgd-color: #F8F8F8;
-  --primary-text-color: ##000000;
-  --secondary-text-color: ##5F6775;
+  --primary-text-color: #000000;
+  --secondary-text-color: #5F6775;
 
   --accent-text-color: #4440F6;
   --hover-text-color: #FFFFFF;
@@ -17,20 +19,113 @@
 body {
 
     background-color: var(--primary-bkgd-color);
+    color: var(--primary-text-color);
+
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.79;
+    /* letter-spacing: 0.38px; */
 
 
-      color: var(--primary-text-color);
-
-      font-family: 'Manrope', sans-serif;
-
-      font-size: 14px;
-      line-height: 1.79;
-      letter-spacing: 0.38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: pink;
 
 }
+.calendar__wrapper header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
+  padding: 25px 30px 10px;
+}
 
+.calendar__wrapper{
+width: 450px;
+background-color: var(--primary-bkgd-color);
+border-radius: 10px;
+}
 
+header .current__date{
+  font-size: 16px;
+  line-height: 1.38;
+}
 
+header .icons span{
+  height: 38px;
+  width: 38px;
+  margin: 0 1px;
+  text-align: center;
+  line-height: 38px;
+  background-color: #efe6e6;
+  border-radius: 50%;
+  cursor: pointer;
 
+  font-size: 32px;
+}
 
+header .icons span:last-child {
+  margin-right: -10px;
+}
+header .icons span:hover {
+  color: var(--accent-text-color);
+}
+
+.calendar ul {
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.calendar ul li {
+  position: relative;
+  width: calc(100% / 7);
+}
+
+.calendar{
+  padding: 20px;
+}
+
+.calendar .weeks li{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.calendar .days{
+  margin-bottom: 20px;
+}
+.calendar .days li {
+  z-index: 1;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.calendar .days li::before{
+  position: absolute;
+  content:"";
+  height: 40px;
+  width: 40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  border-radius: 50%;
+
+}
+.days li:hover::before {
+  background-color: #efe6e6;
+}
+.days li.inactive{
+  color: var(--secondary-text-color);
+}
+.days li.active {
+  color: var(--hover-text-color);
+}
+.days li.active::before{
+background-color: var(--accent-text-color);
+/* color: var(--hover-text-color); */
+npm run descent-override: ;
