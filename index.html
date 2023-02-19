@@ -8,129 +8,105 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Poppins&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap"
       rel="stylesheet"
     />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css"
     />
 
-    
-    
-    
-    
-    
+    <!-- Google Font Link for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
 
-    <title>Team project</title>
-    <script type="module" crossorigin src="/team-project-JStest/assets/index-2e0c1d3d.js"></script>
-    <link rel="stylesheet" href="/team-project-JStest/assets/index-1193297d.css">
+    
+    <title>Calendar-test</title>
+    <script type="module" crossorigin src="/team-project-JStest/assets/index-81b28f0e.js"></script>
+    <link rel="stylesheet" href="/team-project-JStest/assets/index-f6011b8f.css">
   </head>
   <body>
-    <header class="page-header">
-      <div class="container main-nav">
-        <!-- Logo and Nav -->
-        <a href="./index.html" class="logo">NEWS</a>
-        <nav class="nav-section">
-          <ul class="site-nav list">
-            <li class="item">
-              <a href="./index.html" class="link current">Home</a>
-            </li>
-            <li class="item">
-              <a href="" class="link">Favorite</a>
-            </li>
-            <li class="item">
-              <a href="" class="link">Read</a>
-            </li>
-          </ul>
-        </nav>
-        <div class="search-form-wrapper">
-          <form class="search-form" id="search-form">
-            <button class="search-button" type="submit">
-              <svg class="search-lens-icon" width="20" height="19">
-                <use href="/team-project-JStest/assets/icons-845d89d7.svg#search-lens"></use>
-              </svg>
-            </button>
-            <input
-              type="text"
-              name="searchQuery"
-              autocomplete="off"
-              placeholder="Search..."
-            />
-          </form>
-        </div>
-        <div class="theme-form-wrapper">
-          <form class="theme-form">
-            <label>
-              <input
-                id="light"
-                type="radio"
-                name="color"
-                value="Light"
-                checked
-              />
-              Light
-            </label>
-            <label>
-              <input id="dark" type="radio" name="color" value="Dark" />
-              Dark
-            </label>
-          </form>
+    <div class="calendar__wrapper">
+      <div class="calendar__header">
+        <p class="calendar__title"></p>
+        <div class="calendar__arrows">
+          <svg class="year__prev" id="year__prev">
+            <use
+              href="/team-project-JStest/assets/sprite-5093cac8.svg#calendar-arrow-prev"
+              id="year__prev"
+            ></use>
+          </svg>
+          <svg class="year__next" id="year__next">
+            <use
+              href="/team-project-JStest/assets/sprite-5093cac8.svg#calendar-arrow-next"
+              id="year__next"
+            ></use>
+          </svg>
+          <svg class="month__prev" id="month__prev">
+            <use
+              href="/team-project-JStest/assets/sprite-5093cac8.svg#calendar-arrow-prev"
+              id="month__prev"
+            ></use>
+          </svg>
+          <svg class="month__next" id="month__next">
+            <use
+              href="/team-project-JStest/assets/sprite-5093cac8.svg#calendar-arrow-next"
+              id="month__next"
+            ></use>
+          </svg>
         </div>
       </div>
-    </header>
-    <main>
-      <section class="categories">
-        <div class="container">
-          <!-- buttons -->
-          <ul class="button-list list">
-            <li class="item">
-              <button type="button" class="button">Усі</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Веб-сайти</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Додатки</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Дизайн</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Маркетинг</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Дизайн</button>
-            </li>
-            <li class="item">
-              <button type="button" class="button">Маркетинг</button>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <div class="articlesWrapper container"></div>
-      <!-- paginator example -->
-      <!-- <div class="paginator__wrapper">
-        <button class="prev__btn" disabled>Prev</button>
-        <ul class="paginator list">
-          <li class="page__link active" value="1">1</li>
-          <li class="page__link" value="2">2</li>
-          <li class="page__link" value="3">3</li>
-          <li class="page__link" value="4">4</li>
-          <li class="page__link" value="5">5</li>
+      <div class="calendar">
+        <ul class="weeks">
+          <li>Mo</li>
+          <li>Tu</li>
+          <li>We</li>
+          <li>Th</li>
+          <li>Fr</li>
+          <li>Sa</li>
+          <li>Su</li>
         </ul>
-        <button class="next__btn">Next</button>
-      </div> -->
-      <!-- paginator active -->
-      <div class="paginator__wrapper">
-        <button class="prev__btn" disabled>Prev</button>
-
-        <button class="next__btn" disabled>Next</button>
+        <ul class="days">
+          <!-- <li class="inactive">28</li>
+          <li class="inactive">29</li>
+          <li class="inactive">30</li>
+          <li class="inactive">31</li>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+          <li>6</li>
+          <li>7</li>
+          <li>8</li>
+          <li>9</li>
+          <li>10</li>
+          <li>11</li>
+          <li>12</li>
+          <li>13</li>
+          <li>14</li>
+          <li>15</li>
+          <li>16</li>
+          <li>17</li>
+          <li>18</li>
+          <li>19</li>
+          <li class="active">20</li>
+          <li>21</li>
+          <li>22</li>
+          <li>23</li>
+          <li>24</li>
+          <li>25</li>
+          <li>26</li>
+          <li>27</li>
+          <li class="inactive">28</li>
+          <li class="inactive">29</li>
+          <li class="inactive">30</li>
+          <li class="inactive">1</li> -->
+        </ul>
       </div>
-
-      <!-- <div id="sentinel"></div> -->
-    </main>
+    </div>
 
     
   </body>
