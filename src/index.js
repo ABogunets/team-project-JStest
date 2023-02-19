@@ -1,347 +1,106 @@
-// import './css/styles.css';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import SimpleLightbox from "simplelightbox";
-// import "simplelightbox/dist/simple-lightbox.min.css";
-// import picsTpl from './templates/pics-list.hbs';
+const currentDateRef = document.querySelector('.calendar__title');
+const daysRef = document.querySelector('.days');
 
-import NewsApiService from "./news-api.js";
-import { save, load } from "./storage.js";
-
-const formRef = document.querySelector(".search-form");
-const articlesWrapperRef = document.querySelector('.articlesWrapper');
+// const prevNextIconRef = document.querySelectorAll('.icons span');
+const prevNextArrowsRef = document.querySelector('.calendar__arrows');
 
 
-// const sentinelRef = document.querySelector('#sentinel');
+// getting new Date, current year and month
+let date = new Date();
+let currYear = date.getFullYear();
+let currMonth = date.getMonth();
 
-//* theme-switch -----------------------------
-const themeSwitchFormRef = document.querySelector('.theme-form');
-const themeSwitchInputDarkRef = document.querySelector('#dark');
-const themeSwitchInputLightRef = document.querySelector('#light');
+// storing full name of all months in array
+const months = ["January", "February", "March", "April", "May", "June", "July",
+              "August", "September", "October", "November", "December"];
 
-const bodyRef = document.querySelector('body');
-// const lightTheme = {
-//   bkgColor: dark,
-// };
-const STORAGE_KEY = "theme-state-key";
+const renderCalendar = () => {
+  const firstDayOfMonth = new Date(currYear, currMonth, 1).getDay();//getting first day of month
+  const lastDateOfMonth = new Date(currYear, currMonth + 1, 0).getDate();//getting last date of month
+  const lastDayOfMonth = new Date(currYear, currMonth, lastDateOfMonth).getDay();//getting last day of month
+  const lastDateOfPrevMonth = new Date(currYear, currMonth, 0).getDate();//getting last date of previous month
 
-const storedTheme = load(STORAGE_KEY);
-if (storedTheme !== undefined) { setTheme(storedTheme) } else setTheme('Light');
+  let liTag = "";
 
-function setTheme(theme) {
-  if (theme === 'Light') {
-    bodyRef.classList.remove('theme-dark');
-    themeSwitchInputLightRef.checked = true;
-    themeSwitchInputDarkRef.checked = false;
-  };
-  if (theme === 'Dark') {
-
-    bodyRef.classList.add('theme-dark');
-    themeSwitchInputLightRef.checked = false;
-    themeSwitchInputDarkRef.checked = true;
+  for (let i = firstDayOfMonth; i > 0; i -=1) {// creating li for previous month last days
+    liTag += `<li class='inactive'>${lastDateOfPrevMonth - i + 1}</li>`;
   }
-}
 
-themeSwitchFormRef.addEventListener('input', onThemeSwitchFormInput);
+  for (let i = 1; i <= lastDateOfMonth; i += 1) {// creating li for all days of current month
+    //adding active class to li if the current day, month and year matched 
+    const isToday = i === date.getDate() && currMonth === new Date().getMonth()
+                    && currYear===new Date().getFullYear() ? 'active' : '';
+    liTag += `<li class='${isToday}'>${i}</li>`;
+    
+  }
 
-function onThemeSwitchFormInput(e) {
-  const currentTheme = e.currentTarget.color.value;
-  console.log('currentTheme :>> ', currentTheme);
-  save(STORAGE_KEY, currentTheme);
-  setTheme(currentTheme);
-}
-//*-------------------------------
- 
-//* paginator example-----------------------------
-// let currentValue = 1;
-// const pageLinksArrayRef = document.getElementsByClassName('page__link');
-// const paginatorRef = document.querySelector('.paginator');
-// const prevBtnRef = document.querySelector('.prev__btn');
-// const nextBtnRef = document.querySelector('.next__btn');
+  for (let i = lastDayOfMonth; i < 6; i +=1) {// creating li of next month first days
+    liTag += `<li class='inactive'>${i - lastDayOfMonth + 1}</li>`;
+  }
 
-// paginatorRef.addEventListener('click', onPaginatorClick);
-// function onPaginatorClick(e) {
-//   for (const p of pageLinksArrayRef) {
-//     p.classList.remove('active');
-//   }
-//     e.target.classList.add("active");
-//   currentValue = e.target.value;
-//   if (currentValue === 1) {
-//     prevBtnRef.disabled = true;
-//     nextBtnRef.disabled = false;
-//   }
-//   if (currentValue === 5) {
-//     nextBtnRef.disabled = true;
-//     prevBtnRef.disabled = false;
-//   }
-//   if (currentValue > 1 && currentValue < 5) {
-//     prevBtnRef.disabled = false;
-//     nextBtnRef.disabled = false;
-//   };
-//   console.log('currentValue :>> ', currentValue);
-// }
-// prevBtnRef.addEventListener('click', onPrevBtnClick);
-// function onPrevBtnClick() {
-//   if (currentValue > 1) {
-//     for (const p of pageLinksArrayRef) p.classList.remove('active');
-//   };
-//   currentValue -= 1;
-//   pageLinksArrayRef[currentValue - 1].classList.add('active');
-//   console.log('currentValue :>> ', currentValue);
-//   if (currentValue === 1) {
-//     prevBtnRef.disabled = true;
-//     nextBtnRef.disabled = false;
-//   }
-
-// }
-// nextBtnRef.addEventListener('click', onNextBtnClick);
-// function onNextBtnClick() {
-//   if (currentValue < 5) {
-//     for (const p of pageLinksArrayRef) p.classList.remove('active');
-//   };
-//   currentValue += 1;
-//   pageLinksArrayRef[currentValue-1].classList.add('active');
-//   console.log('currentValue :>> ', currentValue);
+  currentDateRef.innerHTML = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
+    daysRef.innerHTML = liTag;
+  }
   
-//     if (currentValue === 5) {
-//     nextBtnRef.disabled = true;
-//     prevBtnRef.disabled = false;
+
+renderCalendar();
+
+// *original block
+// prevNextIconRef.forEach(icon => {// getting prev and next icons
+//   icon.addEventListener('click', () => {//adding click events on both buttons
+//     // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
+//     currMonth = icon.id === 'prev' ? currMonth - 1 : currMonth + 1;
+
+//     if (currMonth < 0 || currMonth > 11) { // if current month is less than 0 or greater than 11
+//       // creating a new date of current year & month and pass it as date value
+//       date = new Date(currYear, currMonth, new Date().getDate());
+//       currYear = date.getFullYear(); // updating current year with new date year
+//       currMonth = date.getMonth(); // updating current month with new date month
+//     } else {
+//       date = new Date(); // pass the current date as date value
 //     }
-// }
-//*------------------
-// *PAGINATOR ACTIVE - NOT READY yet
-// const pageLinksArrayRef = document.getElementsByClassName('page__link');
-// const paginatorWrapperRef = document.querySelector('.paginator__wrapper');
-const paginatorRef = document.querySelector('.paginator');
-const prevBtnRef = document.querySelector('.prev__btn');
-const nextBtnRef = document.querySelector('.next__btn');
+    
+//     renderCalendar(); // calling renderCalendar function
+//   });
+// });
 
-let currentPage = 1;
+  // prevNextIconRef.addEventListener('click', (e) => {//adding click events on both buttons
+  //   const clickedIconRef = e.target;
+  //   console.log('clickedIconRef :>> ', clickedIconRef);
+  // });
 
-const per_page = 10;
-const totalNewsQuantity = 85;
+  // *mine version
+prevNextArrowsRef.addEventListener('click', (e) => {//adding click events on both buttons
+  const clickedIconRef = e.target;
+  console.log('clickedIconRef :>> ', clickedIconRef);
+    // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
 
-const totalPages = Math.ceil(totalNewsQuantity / per_page);
+    // currMonth = clickedIconRef.id === 'prev' ? currMonth - 1 : currMonth + 1;
 
-const centerPageBtn = Math.ceil(totalPages / 2);
-console.log('centerPageBtn :>> ', centerPageBtn);
+  console.log('clickedIconRef.id :>> ', clickedIconRef.id);
+  
+  switch (clickedIconRef.id) {
+  case 'month__prev':
+    currMonth -= 1;
+    break;
 
-
-if (totalPages > 1) {
-  renderPagination(totalPages);
+  case 'month__next':
+    currMonth += 1;
+    break;
 }
-
-function renderPagination(totalPagesNumber) {
-    const ulRef = document.createElement('ul');
-    ulRef.classList.add('paginator');
-    ulRef.classList.add('list');
-
-    const firstPageBtn = renderPaginationBtns(1);
-    ulRef.appendChild(firstPageBtn);
-  
-  
-    if (totalPagesNumber <= 7) {
-      for (let i = 2; i < totalPagesNumber; i += 1) {
-      const currentPage = renderPaginationBtns(i);
-      ulRef.appendChild(currentPage);
-      }
+    
+    if (currMonth < 0 || currMonth > 11) { // if current month is less than 0 or greater than 11
+      // creating a new date of current year & month and pass it as date value
+      date = new Date(currYear, currMonth, new Date().getDate());
+      currYear = date.getFullYear(); // updating current year with new date year
+      currMonth = date.getMonth(); // updating current month with new date month
+    } else { 
+      date = new Date(); // pass the current date as date value
     }
-    if (totalPagesNumber === 8) {
-      for (let i = 2; i < (totalPagesNumber - 2); i += 1) {
-      const currentPage = renderPaginationBtns(i);
-      ulRef.appendChild(currentPage);
-      }
-      const pointsBtn = renderPaginationPoints();
-      ulRef.appendChild(pointsBtn);
-    }
-    if (totalPagesNumber > 8) {
-      ulRef.appendChild(renderPaginationPoints());  
-
-      for (let i = (centerPageBtn - 1); i <= (centerPageBtn +1); i += 1) {
-      const currentPage = renderPaginationBtns(i);
-      ulRef.appendChild(currentPage);
-      }
-
-      ulRef.appendChild(renderPaginationPoints());
-    }
-  
-    const lastPageBtn = renderPaginationBtns(totalPages);
-    ulRef.appendChild(lastPageBtn);
-
-    console.log('ulRef :>> ', ulRef);
-  
-    prevBtnRef.after(ulRef);
-  }
-
-function renderPaginationBtns(pageNumber) {
-  const liEl = document.createElement('li');
-  liEl.classList.add('page__link');
-  liEl.textContent = pageNumber;
-
-  if (currentPage===pageNumber) liEl.classList.add('active');
-
-  liEl.addEventListener('click', () => {
-    currentPage = pageNumber;
-    console.log('pageNumber :>> ', pageNumber);
-    const currentActiveLi = document.querySelector('.page__link.active')
-    currentActiveLi.classList.remove("active");
-
-    liEl.classList.add("active");
-      
+    
+    renderCalendar(); // calling renderCalendar function
   });
 
-  return liEl;
-  
-}
-function renderPaginationPoints() {
-  const liEl = document.createElement('li');
-  liEl.classList.add('page__link');
-  liEl.textContent = "...";
 
-  return liEl;
-}
-
-//   if (currentValue > 1 && currentValue < 5) {
-//     prevBtnRef.disabled = false;
-//     nextBtnRef.disabled = false;
-
-
-// prevBtnRef.addEventListener('click', onPrevBtnClick);
-// function onPrevBtnClick() {
-//   if (currentValue > 1) {
-//     for (const p of pageLinksArrayRef) p.classList.remove('active');
-//   };
-//   currentValue -= 1;
-//   pageLinksArrayRef[currentValue - 1].classList.add('active');
-//   console.log('currentValue :>> ', currentValue);
-//   if (currentValue === 1) {
-//     prevBtnRef.disabled = true;
-//     nextBtnRef.disabled = false;
-//   }
-// }
-
-
-// *------------------
-
-const newsApiService = new NewsApiService();
-
-formRef.addEventListener('submit', onSearch);
-
-function onSearch(e) {
-  e.preventDefault();
-
-  clearNewsList();
-  newsApiService.query = e.currentTarget.searchQuery.value.trim();
-
-  if (newsApiService.query === '') {
-      return Notify.info("Please enter a request.")
-  };
-  
-  newsApiService.resetPage();
-  getNews();
-}
-
-async function getNews() {
-  try {
-    const {docs} = await newsApiService.fetchNews();
-    console.log('docs :>> ', docs);
-    // if (hits.length === 0 && newsApiService.queryPage <= 2) throw "No data";
-    // if (hits.length === 0 && newsApiService.queryPage > 2) {
-    //   throw "End of data";
-    // };
-    // if (!(hits.length === 0) && newsApiService.queryPage === 2) {
-    //   Notify.success(`Hooray! We found ${totalHits} images.`);
-    // };
-      
-    renderNewsMarkup(docs);
-  }
-  catch (err) {
-    onFetchError(err);
-  }
-  finally {
-    // if (newsApiService.queryPage === 2) formRef.reset();
-  }
-}
-// via handlebars
-// function renderPicsMarkup(pics) {
-//   const markup = picsTpl(pics);
-//     picsContainerRef.insertAdjacentHTML('beforeend', markup);
-// }
-
-// function renderPicsMarkup(pics) {
-//   const markup = pics
-//     .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
-//         return `<div class="photo-card">
-//     <a href="${webformatURL}">
-//       <img src="${largeImageURL}" alt="${tags}" />
-//       <div class="info">
-//         <p class="info-item">
-//           <b>Likes</b><span>${likes}</span>
-//         </p>
-//         <p class="info-item">
-//           <b>Views</b><span>${views}</span>
-//         </p>
-//         <p class="info-item">
-//           <b>Comments</b><span>${comments}</span>
-//         </p>
-//         <p class="info-item">
-//           <b>Downloads</b><span>${downloads}</span>
-//         </p>
-//       </div>
-//     </a>
-//   </div>`
-//     })
-//     .join('');
-
-function renderNewsMarkup(docs) {
-  const markup = docs
-    .map(({headline, web_url, multimedia, abstract, pub_date}) => {
-      return `
-    <div class="article-card">
-         <img src="https://www.nytimes.com/${multimedia[1].url}" class="article-img">
-          <h2 class="article-title">${headline.main}</h2>
-          <p class="article-description">${abstract} ...</p>
-          <div class="article-footer">
-            <p class="article-date">${pub_date.slice(0, 10)}</p>
-            <a href="${web_url}" class="article-link" target="_blank">Read more</a>
-          </div>
-    </div>`
-    })
-    .join('');
-
-  console.log('markup :>> ', markup);
-  
-  articlesWrapperRef.insertAdjacentHTML('beforeend', markup);
-}
-
-function clearNewsList() {
-  articlesWrapperRef.innerHTML = "";
-}
-
-function onFetchError(error) {
-  console.log('error :>> ', error);
-  switch (error) { 
-    case "No data":
-      Notify.failure("Sorry, there are no images matching your search query. Please try again.");
-      break;
-    case "End of data":
-      Notify.failure("We're sorry, but you've reached the end of search results.");
-      break;
-  }
-}
-
-// infinite scroll
-// const onEntry = entries => {
-//   entries.forEach(entry => {
-//     if (entry.isIntersecting && newsApiService.query !== '') {
-//         getNews();
-//       }
-//     }
-//   );
-// };
-
-// const observer = new IntersectionObserver(onEntry, {
-//   rootMargin: '150px',
-// });
-// observer.observe(sentinelRef);
 
 
