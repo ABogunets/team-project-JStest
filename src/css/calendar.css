@@ -119,6 +119,7 @@ body {
 
 .month__prev,
 .month__next {
+      outline: 1px solid violet;
   width: 9px;
   height: 17px;
   fill: var(--accent-color);
@@ -126,6 +127,7 @@ body {
 
 .year__prev,
 .year__next {
+        outline: 1px solid violet;
   width: 7px;
   height: 12px;
   fill: var(--accent-color);
