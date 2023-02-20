@@ -1,84 +1,109 @@
-const currentDateRef = document.querySelector('.calendar__title');
-const daysRef = document.querySelector('.days');
-const prevNextArrowsRef = document.querySelector('.calendar__arrows');
+// import './css/styles.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+// import SimpleLightbox from "simplelightbox";
+// import "simplelightbox/dist/simple-lightbox.min.css";
+// import picsTpl from './templates/pics-list.hbs';
+
+import NewsApiService from "./news-api.js";
 
 
-// getting new Date, current year and month
-let date = new Date();
-let currYear = date.getFullYear();
-let currMonth = date.getMonth();
-
-// storing full name of all months in array
-const months = ["January", "February", "March", "April", "May", "June", "July",
-              "August", "September", "October", "November", "December"];
-
-renderCalendar();
-
-prevNextArrowsRef.addEventListener('click', onArrowsClick);
-
-function renderCalendar() {
-  const firstDayOfMonth = new Date(currYear, currMonth, 1).getDay();//getting first day of month
-  console.log('firstDayOfMonth :>> ', firstDayOfMonth);
-
-  const lastDateOfMonth = new Date(currYear, currMonth + 1, 0).getDate();//getting last date of month
-  const lastDayOfMonth = new Date(currYear, currMonth, lastDateOfMonth).getDay();//getting last day of month
-  const lastDateOfPrevMonth = new Date(currYear, currMonth, 0).getDate();//getting last date of previous month
-
-  let liTag = "";
-
-  for (let i = firstDayOfMonth - 1; i > 0; i -=1) {// creating li for previous month last days
-    liTag += `<li class='inactive'>${lastDateOfPrevMonth - i + 1}</li>`;
-  }
-  if (firstDayOfMonth === 0) {
-    for (let i = 6; i > 0; i -= 1) {// creating li for previous month last days in case of Sunday
-      liTag += `<li class='inactive'>${lastDateOfPrevMonth - i + 1}</li>`;
-    }
-  }
-  for (let i = 1; i <= lastDateOfMonth; i += 1) {// creating li for all days of current month
-    //adding active class to li if the current day, month and year matched 
-    const isToday = i === date.getDate() && currMonth === new Date().getMonth()
-                    && currYear===new Date().getFullYear() ? 'active' : '';
-    liTag += `<li class='${isToday} usual'>${i}</li>`;
-  }
-  if (lastDayOfMonth !== 0) { // if not Sunday
-    for (let i = lastDayOfMonth; i < 7; i += 1) {// creating li of next month first days
-      liTag += `<li class='inactive'>${i - lastDayOfMonth + 1}</li>`;
-    }
-  }
-  currentDateRef.innerHTML = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
-    daysRef.innerHTML = liTag;
-  }
+const formRef = document.querySelector(".search-form");
+const articlesWrapperRef = document.querySelector('.articlesWrapper');
+// const sentinelRef = document.querySelector('#sentinel');
 
 
-function onArrowsClick(e) {//adding click events on both buttons
-    const clickedIconRef = e.target;
-    console.log('clickedIconRef :>> ', clickedIconRef);
- 
-    // if clicked icon is previous icon then decrement current month or year by 1 else increment it by 1
-    switch (clickedIconRef.id) {
-      case 'month__prev':
-        currMonth -= 1;
-        break;
-      case 'month__next':
-        currMonth += 1;
-        break;
-      case 'year__prev':
-        currYear -= 1;
-        break;
-      case 'year__next':
-        currYear += 1;
-        break;
-    }
-    if (currMonth < 0 || currMonth > 11) { // if current month is less than 0 or greater than 11
-      // creating a new date of current year & month and pass it as date value
-      date = new Date(currYear, currMonth, new Date().getDate());
-      currYear = date.getFullYear(); // updating current year with new date year
-      currMonth = date.getMonth(); // updating current month with new date month
-    } else {
-      date = new Date(); // pass the current date as date value
-    }
-    renderCalendar(); // calling renderCalendar function
+
+
+const newsApiService = new NewsApiService();
+
+formRef.addEventListener('submit', onSearch);
+
+function onSearch(e) {
+  e.preventDefault();
+
+  clearNewsList();
+  newsApiService.query = e.currentTarget.searchQuery.value.trim();
+
+  if (newsApiService.query === '') {
+      return Notify.info("Please enter a request.")
+  };
+  
+  newsApiService.resetPage();
+  getNews();
 }
 
+async function getNews() {
+  try {
+    const {docs} = await newsApiService.fetchNews();
+    console.log('docs :>> ', docs);
+    // if (hits.length === 0 && newsApiService.queryPage <= 2) throw "No data";
+    // if (hits.length === 0 && newsApiService.queryPage > 2) {
+    //   throw "End of data";
+    // };
+    // if (!(hits.length === 0) && newsApiService.queryPage === 2) {
+    //   Notify.success(`Hooray! We found ${totalHits} images.`);
+    // };
+      
+    renderNewsMarkup(docs);
+  }
+  catch (err) {
+    onFetchError(err);
+  }
+  finally {
+    // if (newsApiService.queryPage === 2) formRef.reset();
+  }
+}
+
+function renderNewsMarkup(docs) {
+  const markup = docs
+    .map(({headline, web_url, multimedia, abstract, pub_date}) => {
+      return `
+    <div class="article-card">
+         <img src="https://www.nytimes.com/${multimedia[1].url}" class="article-img">
+          <h2 class="article-title">${headline.main}</h2>
+          <p class="article-description">${abstract} ...</p>
+          <div class="article-footer">
+            <p class="article-date">${pub_date.slice(0, 10)}</p>
+            <a href="${web_url}" class="article-link" target="_blank">Read more</a>
+          </div>
+    </div>`
+    })
+    .join('');
+
+  console.log('markup :>> ', markup);
+  
+  articlesWrapperRef.insertAdjacentHTML('beforeend', markup);
+}
+
+function clearNewsList() {
+  articlesWrapperRef.innerHTML = "";
+}
+
+function onFetchError(error) {
+  console.log('error :>> ', error);
+  switch (error) { 
+    case "No data":
+      Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+      break;
+    case "End of data":
+      Notify.failure("We're sorry, but you've reached the end of search results.");
+      break;
+  }
+}
+
+// infinite scroll
+// const onEntry = entries => {
+//   entries.forEach(entry => {
+//     if (entry.isIntersecting && newsApiService.query !== '') {
+//         getNews();
+//       }
+//     }
+//   );
+// };
+
+// const observer = new IntersectionObserver(onEntry, {
+//   rootMargin: '150px',
+// });
+// observer.observe(sentinelRef);
 
 

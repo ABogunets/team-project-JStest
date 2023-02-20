@@ -1,11 +1,17 @@
 /* buttons */
 .categories{
+  outline: 1px solid tomato;
+  display: flex;
   padding-top: 28px;
   padding-bottom: 60px;
 }
+
 .button-list {
+  outline: 1px solid teal;
   display: flex;
   justify-content: flex-start;
+
+  margin-right: 111px;
 }
 
 .button-list .item:not(:last-child) {
