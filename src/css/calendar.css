@@ -7,12 +7,6 @@
 }
 
 :root {
-  /* --primary-bkgd-color: #F4F4F4;
-  --primary-text-color: #000000;
-  --secondary-text-color: #5F6775;
-
-  --accent-text-color: #4440F6;
-  --hover-text-color: #FFFFFF; */
 
   --light-theme-bg:#f4f4f4;
   /* $dark-theme-bg: #2e2e2e;
@@ -27,69 +21,57 @@
 /* to add */
 --calendar-bkgd-color:#F8F8F8;
 --calendar-maintext-color: #000000;
---calendar-hover-text-color: #FFFFFF;
+--calendar-active-day-color: #FFFFFF;
 --calendar-week-color:rgba(60, 60, 67, 0.3);
+--calendar-hover-color: #e7e1e1;
 
 }
 
 /* Global */
 body {
 
-    /* background-color: var(--primary-bkgd-color);
-    color: var(--primary-text-color); */
-
-    /* font-family: 'Manrope', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 1.79; */
-    /* letter-spacing: 0.38px; */
-
 
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+
     background-color: var(--light-theme-bg);
 
 }
 
 .calendar__wrapper {
   width: 250px;
-  background-color: var(--calendar-bkgd-color);
-
-  box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-
   padding: 26px 16px 20px;
 
-  color: var(--calendar-maintext-color);
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 14px;
-  line-height: 1.79;
+  color: var(--calendar-maintext-color);
 
+  background-color: var(--calendar-bkgd-color);
+  box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
 }
 
 .calendar__header{
-  outline: 1px solid teal;
+  /* outline: 1px solid teal; */
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 7px 0;
-
 }
 
 .calendar__title{
-  outline: 1px solid red;
+  /* outline: 1px solid red; */
   font-size: 16px;
   line-height: 1.38;
-
 }
 
 .calendar__arrows{
-    outline: 1px solid gold;
-    display: flex;
-    align-items: center;
+    /* outline: 1px solid gold; */
+  display: flex;
+  align-items: center;
 }
 .year__prev {
   margin-right: 5px;
@@ -101,51 +83,23 @@ body {
 .month__prev {
   margin-right: 33px;
 }
-
-/* header .month__icons span{
-  height: 38px;
-  width: 38px;
-  margin: 0 1px;
-  text-align: center;
-  line-height: 38px;
-  background-color: #efe6e6;
-  border-radius: 50%;
-  cursor: pointer;
-
-  font-size: 32px;
-
-    color: var(--accent-color);
-} */
-
 .month__prev,
 .month__next {
-      outline: 1px solid violet;
+      /* outline: 1px solid violet; */
   width: 9px;
   height: 17px;
   fill: var(--accent-color);
 }
-
 .year__prev,
 .year__next {
-        outline: 1px solid violet;
+        /* outline: 1px solid violet; */
   width: 7px;
   height: 12px;
   fill: var(--accent-color);
 }
 
-
-/* header .month__icons span:last-child {
-  margin-right: -10px;
-} */
-/* header .month__icons span:hover {
-  color: var(--accent-color);
-} */
-
-
-
 .calendar {
-  outline: 1px solid tomato;
-  /* padding: 20px; */
+  /* outline: 1px solid tomato; */
 }
 .calendar ul {
   display: flex;
@@ -159,10 +113,8 @@ body {
   width: calc(100% / 7);
 }
 
-
-
 .calendar .weeks li{
-  outline: 1px solid yellowgreen;
+  /* outline: 1px solid yellowgreen; */
   font-weight: 400;
   font-size: 12px;
   line-height: 1.5;
@@ -170,19 +122,24 @@ body {
   margin-bottom: 14px;
   color: var(--calendar-week-color);
 }
-.calendar .days{
-  /* margin-bottom: 20px; */
+
+.days li {
+  /* outline: 1px solid orange; */
 }
-.calendar .days li {
-    outline: 1px solid orange;
+.days li.usual{
   z-index: 1;
   cursor: pointer;
 }
 .calendar .days li:nth-child(n + 8){
-    margin-top: 12px;
+  margin-top: 12px;
 }
-
-.calendar .days li::before{
+.days li.usual:nth-child(7n + 7) {
+  color: var(--theme-switcher-color);
+}
+.days li.usual:nth-child(7n + 6) {
+  color: var(--theme-switcher-color);
+}
+.days li.usual::before {
   position: absolute;
   content:"";
   height: 28px;
@@ -192,17 +149,20 @@ body {
   transform: translate(-50%, -50%);
   z-index: -1;
   border-radius: 50%;
-
 }
-.days li:hover::before {
-  background-color: var(--calendar-week-color);
+.days li.usual:hover::before {
+    /* УТОЧНИТЬ НАДО ЛИ ХОВЕР И КАКОГО ЦВЕТА */
+  background-color: var(--calendar-hover-color);
 }
 .days li.inactive{
-  /* УТОЧНИТЬ НАДО ЛИ ХОВЕР И КАКОГО ЦВЕТА */
-  color: var(--theme-switcher-color);
+  color: var(--calendar-week-color); 
 }
 .days li.active {
-  color: var(--calendar-hover-text-color);
+  color: var(--calendar-active-day-color);
 }
 .days li.active::before{
 background-color: var(--accent-color);
+}
+.days li.active:hover::before {
+  background-color: var(--accent-color);
+}
