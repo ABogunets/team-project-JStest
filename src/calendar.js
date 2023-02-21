@@ -6,7 +6,7 @@ const prevNextArrowsRef = document.querySelector('.calendar__arrows');
 
 const calendarWrapperRef = document.querySelector('.calendar__wrapper');
 const calendarFormRef = document.querySelector('.calendar__form');
-const calendarOpenBtnRef = document.querySelector('.calendar__arrow-btn');
+const calendarDisplayDateRef = document.querySelector('.calendar__form-text');
 
 
 // console.log('calendarInputRef :>> ', calendarInputRef);
@@ -40,6 +40,11 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
 renderCalendar();
 prevNextArrowsRef.addEventListener('click', onArrowsClick);//listening click on month and year arrows
 daysRef.addEventListener('click', onDaysClick);//listening click on days
+
+
+
+
+
 
 function renderCalendar() {
   const firstDayOfMonth = new Date(currYear, currMonth, 1).getDay();//getting first day of month
@@ -102,20 +107,26 @@ function onArrowsClick(e) {//adding click events on month and year arrows
     renderCalendar(); // calling renderCalendar function
 }
 
-function onDaysClick(e) {
+function onDaysClick(e) { //adding click events on days
   const clickedDate = e.target.innerText;
+  console.log('e :>> ', e);
 
   if (e.target.className !== 'inactive') {//to exclude selection of inactive dates
+
+    // e.target.classList.add('selected');
 
     let selectedApiDate = `${currYear}/${addLeadingZero(currMonth + 1)}/${addLeadingZero(clickedDate)}`;
     console.log('selectedApiDate :>> ', selectedApiDate);
 
     let displayDate = `${addLeadingZero(clickedDate)}/${addLeadingZero(currMonth + 1)}/${currYear}`;
     console.log('displayDate :>> ', displayDate);
+    calendarDisplayDateRef.textContent = displayDate;
   }
-  // console.log('displayDate :>> ', displayDate);
-  // calendarInputRef.value = 'kfkfdkhgdkhgd';
-  // calendarInputRef.value = displayDate;
+
+  console.log('selectedApiDate :>> ', selectedApiDate);
+  console.log('displayDate :>> ', displayDate);
+
+  return selectedApiDate;
 }
 
 function addLeadingZero(value) {
@@ -123,3 +134,4 @@ function addLeadingZero(value) {
 }
 
 
+export default selectedApiDate;

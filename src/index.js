@@ -6,6 +6,9 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import NewsApiService from "./news-api.js";
 
+import selectedDate from "./calendar.js";
+
+console.log('selectedDate :>> ', selectedDate);
 
 const formRef = document.querySelector(".search-form");
 const articlesWrapperRef = document.querySelector('.articlesWrapper');
