@@ -105,6 +105,9 @@
   border: none;
   outline: none;
   background-color: transparent;
+
+  color: var(--light-theme-text);
+  opacity: 0.4;
 }
 
 .search-button {

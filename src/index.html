@@ -81,7 +81,6 @@
     </header>
     <main>
       <section class="categories container">
-        <!-- <div class=""> -->
         <!-- buttons -->
         <ul class="button-list list">
           <li class="item">
@@ -109,28 +108,24 @@
         <!-- calendar form -->
         <div class="calendar__box">
           <p class="calendar__form-title">Search date news</p>
-          <!-- <div class="calendar__form-wrapper"> -->
-          <form class="calendar__form">
+          <div class="calendar__form">
             <div class="calendar__icon">
               <svg class="calendar__svg">
                 <use href="./images/sprite.svg#calendar"></use>
               </svg>
             </div>
-            <input
-              type="text"
-              name="selectDate"
-              autocomplete="off"
-              placeholder="Select date..."
-            />
-            <button class="calendar__arrow-btn" type="button">
-              <svg class="calendar__arrow-svg">
+            <p class="calendar__form-text">Search date...</p>
+            <div class="calendar__arrow-btn">
+              <svg class="arrow__down-svg">
                 <use href="./images/sprite.svg#calendar-arrow-down"></use>
               </svg>
-            </button>
-          </form>
-
+              <svg class="arrow__up-svg">
+                <use href="./images/sprite.svg#calendar-arrow-up"></use>
+              </svg>
+            </div>
+          </div>
           <!-- calendar -->
-          <div class="calendar__wrapper">
+          <div class="calendar__wrapper hidden">
             <div class="calendar__header">
               <p class="calendar__title"></p>
               <div class="calendar__arrows">

@@ -5,13 +5,16 @@ const daysRef = document.querySelector('.days');
 const prevNextArrowsRef = document.querySelector('.calendar__arrows');
 
 const calendarWrapperRef = document.querySelector('.calendar__wrapper');
+const calendarFormRef = document.querySelector('.calendar__form');
 const calendarOpenBtnRef = document.querySelector('.calendar__arrow-btn');
 
 
 // console.log('calendarInputRef :>> ', calendarInputRef);
 
-calendarOpenBtnRef.addEventListener('click', () => {
-  calendarWrapperRef.classList.toggle('hidden')
+calendarFormRef.addEventListener('click', () => {
+  calendarWrapperRef.classList.toggle('hidden');
+  calendarFormRef.classList.toggle('selected');
+
 })
 
 
